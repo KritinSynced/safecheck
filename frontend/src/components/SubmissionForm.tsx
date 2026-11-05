@@ -55,10 +55,10 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({ onModerationComp
       badgeClass: 'bg-amber-50 text-amber-700 border-amber-200'
     },
     {
-      label: 'Blocked Sample',
+      label: 'Blocked Graphic Gore',
       expected: 'Blocked (≥ 70)',
-      filename: 'blocked_violence_sample.png',
-      path: '/test_samples/blocked_violence_sample.png',
+      filename: 'blocked_gore_sample.jpg',
+      path: '/test_samples/blocked_gore_sample.jpg',
       badgeClass: 'bg-rose-50 text-rose-700 border-rose-200'
     },
   ];
@@ -68,7 +68,7 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({ onModerationComp
       setErrorMessage(null);
       const res = await fetch(preset.path);
       const blob = await res.blob();
-      const file = new File([blob], preset.filename, { type: 'image/png' });
+      const file = new File([blob], preset.filename, { type: blob.type || 'image/jpeg' });
       setSelectedImage(file);
       setImagePreviewUrl(preset.path);
 

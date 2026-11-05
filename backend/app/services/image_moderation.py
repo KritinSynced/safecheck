@@ -266,10 +266,10 @@ def simulate_mock_image_moderation(
     fn = original_filename.lower()
     mock_labels = []
 
-    if "explicit" in fn or "violence" in fn or "hate" in fn:
+    if "explicit" in fn or "violence" in fn or "hate" in fn or "gore" in fn or "blood" in fn:
         mock_labels = [
-            {"Name": "Explicit Nudity", "ParentName": "Explicit Content", "Confidence": 88.5},
-            {"Name": "Graphic Violence", "ParentName": "Violence", "Confidence": 79.2}
+            {"Name": "Graphic Violence or Gore", "ParentName": "Violence", "Confidence": 91.5},
+            {"Name": "Physical Trauma & Blood", "ParentName": "Visually Disturbing", "Confidence": 86.0}
         ]
     elif "crash" in fn or "accident" in fn or "damage" in fn:
         mock_labels = [
