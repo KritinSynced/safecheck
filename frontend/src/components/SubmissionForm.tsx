@@ -41,21 +41,21 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({ onModerationComp
 
   const imagePresets = [
     {
-      label: 'Safe Image',
+      label: 'Safe City View',
       expected: 'Safe (< 30)',
-      filename: 'safe_nature_sample.png',
-      path: '/test_samples/safe_nature_sample.png',
+      filename: 'safe_city_sample.jpg',
+      path: '/test_samples/safe_city_sample.jpg',
       badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200'
     },
     {
-      label: 'Flagged Image',
+      label: 'Flagged Sample',
       expected: 'Flagged (30 - 69)',
       filename: 'flagged_weapons_sample.png',
       path: '/test_samples/flagged_weapons_sample.png',
       badgeClass: 'bg-amber-50 text-amber-700 border-amber-200'
     },
     {
-      label: 'Blocked Image',
+      label: 'Blocked Sample',
       expected: 'Blocked (≥ 70)',
       filename: 'blocked_violence_sample.png',
       path: '/test_samples/blocked_violence_sample.png',
