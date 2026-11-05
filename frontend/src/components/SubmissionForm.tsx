@@ -39,6 +39,51 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({ onModerationComp
     },
   ];
 
+  const imagePresets = [
+    {
+      label: 'Safe Image',
+      expected: 'Safe (< 30)',
+      filename: 'safe_nature_sample.png',
+      path: '/test_samples/safe_nature_sample.png',
+      badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200'
+    },
+    {
+      label: 'Flagged Image',
+      expected: 'Flagged (30 - 69)',
+      filename: 'flagged_weapons_sample.png',
+      path: '/test_samples/flagged_weapons_sample.png',
+      badgeClass: 'bg-amber-50 text-amber-700 border-amber-200'
+    },
+    {
+      label: 'Blocked Image',
+      expected: 'Blocked (≥ 70)',
+      filename: 'blocked_violence_sample.png',
+      path: '/test_samples/blocked_violence_sample.png',
+      badgeClass: 'bg-rose-50 text-rose-700 border-rose-200'
+    },
+  ];
+
+  const handleSelectImagePreset = async (preset: typeof imagePresets[0], autoAnalyze: boolean = false) => {
+    try {
+      setErrorMessage(null);
+      const res = await fetch(preset.path);
+      const blob = await res.blob();
+      const file = new File([blob], preset.filename, { type: 'image/png' });
+      setSelectedImage(file);
+      setImagePreviewUrl(preset.path);
+
+      if (autoAnalyze) {
+        setIsSubmitting(true);
+        const result = await moderateImageContent(file);
+        onModerationComplete(result);
+        setIsSubmitting(false);
+      }
+    } catch (err: any) {
+      setErrorMessage('Failed to load sample image.');
+      setIsSubmitting(false);
+    }
+  };
+
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setErrorMessage(null);
     const file = e.target.files?.[0];
@@ -203,8 +248,43 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({ onModerationComp
           </div>
         ) : (
           <div className="space-y-3">
-            <label className="block text-xs font-medium text-slate-700">
-              Upload Image for Moderation
+            <div>
+              <p className="text-xs text-slate-500 mb-1.5 flex items-center space-x-1">
+                <Sparkles className="w-3 h-3 text-slate-400" />
+                <span>Quick Test Sample Images (1-Click Score):</span>
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                {imagePresets.map((preset) => (
+                  <button
+                    key={preset.label}
+                    type="button"
+                    onClick={() => handleSelectImagePreset(preset, true)}
+                    disabled={isSubmitting}
+                    className="p-2 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-slate-300 transition-all text-left flex items-center space-x-2.5 cursor-pointer disabled:opacity-50"
+                  >
+                    <div className="w-10 h-10 rounded bg-slate-200 overflow-hidden flex-shrink-0 border border-slate-300">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={preset.path}
+                        alt={preset.label}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <p className="text-xs font-semibold text-slate-900 truncate">
+                        {preset.label}
+                      </p>
+                      <span className={`inline-block text-[10px] font-semibold px-1.5 py-0.2 rounded border ${preset.badgeClass}`}>
+                        {preset.expected}
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <label className="block text-xs font-medium text-slate-700 pt-1">
+              Or Upload Your Own Image
             </label>
 
             {!imagePreviewUrl ? (
