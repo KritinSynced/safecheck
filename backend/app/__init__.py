@@ -1,0 +1,2 @@
+# SafeCheck backend application package
+
