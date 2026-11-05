@@ -24,7 +24,8 @@ HIGH_SEVERITY_CATEGORIES = {
 
 MODERATE_SEVERITY_CATEGORIES = {
     "suggestive", "revealing clothes", "sexual situations", "tobacco",
-    "alcohol", "gambling", "weapons", "drugs", "rudeness"
+    "alcohol", "gambling", "weapons", "drugs", "rudeness",
+    "accident & damage", "vehicular crash", "property damage"
 }
 
 
@@ -269,6 +270,11 @@ def simulate_mock_image_moderation(
         mock_labels = [
             {"Name": "Explicit Nudity", "ParentName": "Explicit Content", "Confidence": 88.5},
             {"Name": "Graphic Violence", "ParentName": "Violence", "Confidence": 79.2}
+        ]
+    elif "crash" in fn or "accident" in fn or "damage" in fn:
+        mock_labels = [
+            {"Name": "Vehicular Crash Scene", "ParentName": "Accident & Damage", "Confidence": 78.0},
+            {"Name": "Property Damage", "ParentName": "Accident & Damage", "Confidence": 66.0}
         ]
     elif "flagged" in fn or "weapons" in fn or "suggestive" in fn or "drink" in fn:
         mock_labels = [

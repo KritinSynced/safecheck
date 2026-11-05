@@ -48,10 +48,10 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({ onModerationComp
       badgeClass: 'bg-emerald-50 text-emerald-700 border-emerald-200'
     },
     {
-      label: 'Flagged Sample',
+      label: 'Flagged Crash Scene',
       expected: 'Flagged (30 - 69)',
-      filename: 'flagged_weapons_sample.png',
-      path: '/test_samples/flagged_weapons_sample.png',
+      filename: 'flagged_crash_sample.jpg',
+      path: '/test_samples/flagged_crash_sample.jpg',
       badgeClass: 'bg-amber-50 text-amber-700 border-amber-200'
     },
     {
